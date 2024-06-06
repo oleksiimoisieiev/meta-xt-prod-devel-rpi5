@@ -159,7 +159,340 @@ TODO: cmds and logs
 
 ## Bootlog
 
-TODO
+The boot log will look like below when RPI5 is booted:
+
+```
+NOTICE:  BL31: v2.10.0(release):v2.10.0-958-g09a1cc2a0b-dirty
+NOTICE:  BL31: Built : 14:54:20, May 10 2024
+I/TC: 
+I/TC: Non-secure external DT found
+I/TC: pl011: device parameters ignored (115200n8)
+E/TC:0 0   pl011_dev_init:216 pl011: unexpected register size: 200
+I/TC: OP-TEE version: 4.2.0 (gcc version 13.2.0 (GCC)) #1 Fri Apr 12 09:51:21 UTC 2024 aarch64
+I/TC: WARNING: This OP-TEE configuration might be insecure!
+I/TC: WARNING: Please check https://optee.readthedocs.io/en/latest/architecture/porting_guidelines.html
+I/TC: Primary CPU initializing
+I/TC: Initializing virtualization support
+I/TC: Primary CPU switching to normal world boot
+I/TC: WARNING: Using fixed value for stack canary
+
+
+U-Boot 2024.04 (May 31 2024 - 15:00:11 +0000)
+
+DRAM:  1020 MiB (effective 8 GiB)
+mbox: Header response code invalid
+RPI 5 Model B (0xd04170)
+Core:  44 devices, 15 uclasses, devicetree: board
+MMC:   mmc@fff000: 0, mmc@1100000: 1
+Loading Environment from FAT... Unable to read "uboot.env" from mmc0:1... 
+In:    serial,usbkbd
+Out:   serial,vidconsole
+Err:   serial,vidconsole
+mbox: Header response code invalid
+bcm2835: Could not query MAC address
+PCIe BRCM: link up, 5.0 Gbps x4 (!SSC)
+Net:   eth0: ethernet@100000
+
+starting USB...
+No working controllers found
+Hit any key to stop autoboot:  0 
+No EFI system partition
+No EFI system partition
+Failed to persist EFI variables
+No EFI system partition
+Failed to persist EFI variables
+No EFI system partition
+Failed to persist EFI variables
+** Booting bootflow '<NULL>' with efi_mgr
+Loading Boot0000 'mmc 0' failed
+EFI boot manager: Cannot load any image
+Boot failed (err=-14)
+** Booting bootflow 'mmc@fff000.bootdev.part_1' with script
+Working FDT set to 2efec900
+1179656 bytes read in 52 ms (21.6 MiB/s)
+1994 bytes read in 2 ms (973.6 KiB/s)
+341 bytes read in 2 ms (166 KiB/s)
+11982 bytes read in 2 ms (5.7 MiB/s)
+2961412 bytes read in 125 ms (22.6 MiB/s)
+10149062 bytes read in 424 ms (22.8 MiB/s)
+6116 bytes read in 2 ms (2.9 MiB/s)
+Working FDT set to 1c00000
+920 bytes read in 1 ms (898.4 KiB/s)
+## Flattened Device Tree blob at 2efec900
+   Booting using the fdt blob at 0x2efec900
+Working FDT set to 2efec900
+   Using Device Tree in place at 000000002efec900, end 000000002f005fff
+Working FDT set to 2efec900
+
+Starting kernel ...
+
+ Xen 4.19-unstable
+(XEN) Xen version 4.19-unstable (xtrs@) (aarch64-poky-linux-gcc (GCC) 13.2.0) debug=y 2024-02-02
+(XEN) Latest ChangeSet: Fri Jan 5 10:46:44 2024 +0200 git:8ff1f6708a-dirty
+(XEN) build-id: 9987ca876899bfc009d6377fd79ced2324a56e1b
+(XEN) Processor: 00000000414fd0b1: "ARM Limited", variant: 0x4, part 0xd0b,rev 0x1
+(XEN) 64-bit Execution:
+(XEN)   Processor Features: 1100000010111112 0000000000000010
+(XEN)     Exception Levels: EL3:64 EL2:64 EL1:64 EL0:64+32
+(XEN)     Extensions: FloatingPoint AdvancedSIMD
+(XEN)   Debug Features: 0000000010305408 0000000000000000
+(XEN)   Auxiliary Features: 0000000000000000 0000000000000000
+(XEN)   Memory Model Features: 0000000000101122 0000000010212122
+(XEN)   ISA Features:  0000100010211120 0000000000100001
+(XEN) 32-bit Execution:
+(XEN)   Processor Features: 0000000010010131:0000000000010000
+(XEN)     Instruction Sets: AArch32 A32 Thumb Thumb-2 Jazelle
+(XEN)     Extensions: GenericTimer
+(XEN)   Debug Features: 0000000004010088
+(XEN)   Auxiliary Features: 0000000000000000
+(XEN)   Memory Model Features: 0000000010201105 0000000040000000
+(XEN)                          0000000001260000 0000000002122211
+(XEN)   ISA Features: 0000000002101110 0000000013112111 0000000021232042
+(XEN)                 0000000001112131 0000000000010142 0000000001011121
+(XEN) Using SMC Calling Convention v1.5
+(XEN) Using PSCI v1.1
+(XEN) SMP: Allowing 4 CPUs
+(XEN) Generic Timer IRQ: phys=30 hyp=26 virt=27 Freq: 54000 KHz
+(XEN) GICv2 initialization:
+(XEN)         gic_dist_addr=000000107fff9000
+(XEN)         gic_cpu_addr=000000107fffa000
+(XEN)         gic_hyp_addr=000000107fffc000
+(XEN)         gic_vcpu_addr=000000107fffe000
+(XEN)         gic_maintenance_irq=25
+(XEN) GICv2: 320 lines, 4 cpus, secure (IID 0200143b).
+(XEN) XSM Framework v1.0.1 initialized
+(XEN) Flask: 128 avtab hash slots, 361 rules.
+(XEN) Flask: 128 avtab hash slots, 361 rules.
+(XEN) Flask:  4 users, 3 roles, 42 types, 2 bools
+(XEN) Flask:  13 classes, 361 rules
+(XEN) Flask:  Starting in permissive mode.
+(XEN) Initialized GSX IRQ
+(XEN) Using scheduler: SMP Credit Scheduler rev2 (credit2)
+(XEN) Initializing Credit2 scheduler
+(XEN)  load_precision_shift: 18
+(XEN)  load_window_shift: 30
+(XEN)  underload_balance_tolerance: 0
+(XEN)  overload_balance_tolerance: -3
+(XEN)  runqueues arrangement: socket
+(XEN)  cap enforcement granularity: 10ms
+(XEN) load tracking window length 1073741824 ns
+(XEN) Allocated console ring of 32 KiB.
+(XEN) CPU0: Guest atomics will try 17 times before pausing the domain
+(XEN) Bringing up CPU1
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+(XEN) CPU1: Guest atomics will try 15 times before pausing the domain
+(XEN) CPU 1 booted.
+(XEN) Bringing up CPU2
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+(XEN) CPU2: Guest atomics will try 6 times before pausing the domain
+(XEN) CPU 2 booted.
+(XEN) Bringing up CPU3
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+(XEN) CPU3: Guest atomics will try 2 times before pausing the domain
+(XEN) Brought up 4 CPUs
+(XEN) CPU 3 booted.
+(XEN) I/O virtualisation disabled
+(XEN) P2M: 40-bit IPA with 40-bit PA and 16-bit VMID
+(XEN) P2M: 3 levels with order-1 root, VTCR 0x00000000800a3558
+(XEN) Scheduling granularity: cpu, 1 CPU per sched-resource
+(XEN) Initializing Credit2 scheduler
+(XEN)  load_precision_shift: 18
+(XEN)  load_window_shift: 30
+(XEN)  underload_balance_tolerance: 0
+(XEN)  overload_balance_tolerance: -3
+(XEN)  runqueues arrangement: socket
+(XEN)  cap enforcement granularity: 10ms
+(XEN) load tracking window length 1073741824 ns
+(XEN) Adding cpu 0 to runqueue 0
+(XEN)  First cpu on runqueue, activating
+(XEN) Adding cpu 1 to runqueue 0
+(XEN) Adding cpu 2 to runqueue 0
+(XEN) Adding cpu 3 to runqueue 0
+(XEN) OP-TEE supports 4 simultaneous threads per guest.
+I/TC: Removing guest 0
+E/TC:0 0   virt_guest_destroyed:393 Client with id 0 is not found
+(XEN) Using TEE mediator for OP-TEE
+(XEN) alternatives: Patching with alt table 00000a00002f0d88 -> 00000a00002f1fa0
+(XEN) CPU0 will use 24 loops workaround on exception entry
+(XEN) CPU2 will use 24 loops workaround on exception entry
+(XEN) CPU3 will use 24 loops workaround on exception entry
+(XEN) CPU1 will use 24 loops workaround on exception entry
+I/TC: Added guest 1
+(XEN) *** LOADING DOMAIN 0 ***
+(XEN) Loading d0 kernel from boot module @ 0000000000e00000
+(XEN) Allocating 1:1 mappings totalling 128MB for dom0:
+(XEN) BANK[0] 0x00000010000000-0x00000018000000 (128MB)
+(XEN) Grant table range: 0x00000002000000-0x00000002040000
+(XEN) Allocating PPI 16 for event channel interrupt
+(XEN) d0: extended region 0: 0x2200000->0x7e00000
+(XEN) d0: extended region 1: 0x8400000->0xfe00000
+(XEN) d0: extended region 2: 0x18000000->0x1ce00000
+(XEN) d0: extended region 3: 0x1f000000->0x3fa00000
+(XEN) d0: extended region 4: 0x40000000->0x4fe00000
+(XEN) d0: extended region 5: 0x70000000->0x1ffe00000
+(XEN) Loading zImage from 0000000000e00000 to 0000000010000000-00000000102d3004
+(XEN) Loading d0 DTB to 0x0000000017e00000-0x0000000017e13436
+(XEN) avc:  denied  { create } for current=d[IDLE] scontext=system_u:system_r:xenboot_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) *** LOADING DOMU cpus=1 memory=0x80000KB ***
+(XEN) Loading d1 kernel from boot module @ 0000000001200000
+(XEN) d1: STATIC BANK[0] 0x00000050000000-0x00000070000000
+I/TC: Added guest 2
+(XEN) d1: extended region 0: 0x200000->0x7e00000
+(XEN) d1: extended region 1: 0x8400000->0x1ce00000
+(XEN) d1: extended region 2: 0x1f000000->0x37e00000
+(XEN) d1: extended region 3: 0x39000000->0x3fa00000
+(XEN) d1: extended region 4: 0x40000000->0x4fe00000
+(XEN) d1: extended region 5: 0x70000000->0x1ffe00000
+(XEN) Loading zImage from 0000000034000000 to 0000000050000000-0000000051aaba00
+(XEN) Loading d1 DTB to 0x0000000058000000-0x0000000058001984
+(XEN) avc:  denied  { create } for current=d[IDLE] scontext=system_u:system_r:xenboot_t tcontext=system_u:object_r:dom0_t tclass=event
+(XEN) avc:  denied  { bind } for current=d[IDLE] scontext=system_u:object_r:dom0_t tcontext=system_u:system_r:dom0_t tclass=event
+(XEN) Initial low memory virq threshold set at 0x4000 pages.
+(XEN) Scrubbing Free RAM in background
+(XEN) Std. Loglevel: All
+(XEN) Guest Loglevel: All
+(XEN) ***************************************************
+(XEN) WARNING: SILO mode is not enabled.
+(XEN) It has implications on the security of the system,
+(XEN) unless the communications have been forbidden between
+(XEN) untrusted domains.
+(XEN) ***************************************************
+(XEN) 3... 2... 1... 
+(XEN) *** Serial input to DOM0 (type 'CTRL-a' three times to switch input)
+(XEN) Freed 396kB init memory.
+(XEN) d1v0 Unhandled SMC/HVC: 0x84000050
+(XEN) d1v0 Unhandled SMC/HVC: 0x8600ff01
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER4
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER8
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER12
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER16
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER20
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER24
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER28
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER32
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER36
+(XEN) d1v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
+(XEN) avc:  denied  { getparam } for source=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:unlabeled_t tclass=hvm
+(XEN) avc:  denied  { physmap } for source=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:unlabeled_t tclass=mmu
+(XEN) avc:  denied  { query } for source=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:unlabeled_t tclass=grant
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER4
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER8
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER12
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER16
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER20
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER24
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER28
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER32
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER36
+(XEN) d0v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 1 to 2 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 2 to 3 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 3 to 4 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 4 to 5 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 5 to 6 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 6 to 7 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 7 to 8 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 8 to 9 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 9 to 10 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 10 to 11 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 11 to 12 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 12 to 13 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 13 to 14 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 14 to 15 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 15 to 16 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 16 to 17 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 17 to 18 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 18 to 19 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant It/TC: Reserved shared memory is enabled
+abI/TC: Dynamic shared memory is enabled
+leI/TC: Normal World virtualization support is enabled
+ If/TC: Asynchronous notifications are disabled
+rom 19 to 20 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 20 to 21 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 21 to 22 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 22 to 23 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 23 to 24 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 24 to 25 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 25 to 26 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 26 to 27 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 27 to 28 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 28 to 29 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 29 to 30 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 30 to 31 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 31 to 32 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 32 to 33 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 33 to 34 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 34 to 35 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 35 to 36 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 36 to 37 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 37 to 38 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 38 to 39 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 39 to 40 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 40 to 41 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 41 to 42 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 42 to 43 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 43 to 44 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 44 to 45 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 45 to 46 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 46 to 47 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 47 to 48 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 48 to 49 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 49 to 50 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 50 to 51 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 51 to 52 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 52 to 53 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 53 to 54 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 54 to 55 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 55 to 56 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 56 to 57 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 57 to 58 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 58 to 59 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 59 to 60 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 60 to 61 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 61 to 62 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 62 to 63 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d0v0 Expanding d0 grant table from 63 to 64 frames
+I: sdhc: detected ver:2 vendor_ver:16 supported
+I: sdhc: capabilities caps0:15eac832 caps1:8000a577
+I: mmc@1000fff000:"reset max bus frequency to 200000000 from 0"
+
+
+** Booting Zephyr OS build cb85dfaa5099 ***
+(XEN) avc:  denied  { getdomaininfo } for source=d0 target=d1 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { getparam } for source=d0 target=d1 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=hvm
+(XEN) avc:  denied  { map_read map_write } for source=d0 target=d1 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=mmu
+(XEN) avc:  denied  { create } for source=d0 target=d1 scontext=system_u:system_r:dom0_t tcontext=system_u:object_r:unlabeled_t tclass=event
+(XEN) avc:  denied  { bind } for source=d0 target=d1 scontext=system_u:object_r:unlabeled_t tcontext=system_u:system_r:unlabeled_t tclass=event
+(XEN) avc:  denied  { setparam } for source=d0 target=d1 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=hvm
+(XEN) avc:  denied  { send } for current=d0 scontext=system_u:system_r:dom0_t tcontext=system_u:object_r:unlabeled_t tclass=event
+I: d(XEN) avc:  denied  { send } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:object_r:dom0_t tclass=event
+om0less: attached 1 domains
+32muart:~$ I: Card switched to 1.8V signaling
+I: storage: block count 124735488, Sector size 512, Memory Size(MB) 60906
+I: storage: mounted, binaries folder /0:/dom0/
+
+uart:~$ 
+uart:~$ (XEN) avc:  denied  { xen_extraversion } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_compile_info } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_capabilities } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_changeset } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_pagesize } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_commandline } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { xen_build_id } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=version
+(XEN) avc:  denied  { physinfo } for current=d1 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=xen
+fs ls /0(XEN) DOM1: 
+(XEN) DOM1: Poky (Yocto Project Reference Distro) 5.0.1 raspberrypi5-domd ttyAMA0
+(XEN) DOM1: 
+:/dom0
+z_sync.bin
+z_blinky.bin
+helloworld_xen-arm64
+liunx_pv_image
+uart:~$
+```
 
 ## Wiki
 Link to the wiki pages:
