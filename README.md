@@ -287,6 +287,7 @@ I: kernsize_aligned = 2097152
 I: DTB will be placed on addr = 0x40e00000
 I: storage: file read /0:/dom0/z_sync.bin size: 364548
 domain:3 created
+^^^^^^^^^^^^^^^^
 uart:~$ (XEN) d3v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
 (XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 1 to 2 frames
 (XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 2 to 3 frames
@@ -341,7 +342,175 @@ domain:3 destroyed
 
 ## Start Unikraft helloworld_xen-arm64 domain example
 
-TODO: cmds and logs
+The **helloworld_xen-arm64** is Xen guest domain (DomU Unikraft) without using real RPI5 HW
+which is based on "Unikraft helloworld" and "monkey" examples.
+
+Create DomU Unikraft by using ``xu create`` with **helloworld_xen-arm64**.
+
+**NOTE**: Look for the line like **"domain:4 created"** to get Xen domain id which will be passed to
+to all subsequent commands.
+
+```
+uart:~$ xu config_list
+rpi_5_domd
+rpi_5_domu
+helloworld_xen-arm64
+linux_pv_domu
+uart:~$ xu create helloworld_xen-arm64
+I: storage: file read /0:/dom0/helloworld_xen-arm64 size: 64
+I: storage: file read /0:/dom0/helloworld_xen-arm64 size: 64
+I: bootargs =
+I: Extended region 0: 0x41000000->0xc0000000
+I: Extended region 1: 0x200000000->0x10000000000
+I: rambase = 40000000, ramsize = 16777216
+I: kernbase = 40000000 kernsize = 884744, dtbsize = 8192
+I: kernsize_aligned = 2097152
+I: DTB will be placed on addr = 0x40e00000
+I: storage: file read /0:/dom0/helloworld_xen-arm64 size: 884744
+XEN) avc:  denied  { writeconsole } for current=d4 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:xen_t tclass=xen
+;(d4) - Mini-OS booting -
+3(d4) - Setup CPU -
+2(d4) - Setup booting pagetable -
+m(d4) - MMU on -
+d(d4) - Setup stack -
+o(d4) - Jumping to C entry -
+main(XEN) d4v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
+:4 created
+^^^^^^^^^^^^^^^^
+uart:~$ (XEN) xen-source/xen/common/grant_table.c:1909:d4v0 Expanding d4 grant table from 1 to 2 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d4v0 Expanding d4 grant table from 2 to 3 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d4v0 Expanding d4 grant table from 3 to 4 frames
+```
+
+Attach to DomU Unikraft console with ``xu console <domid>``, use ``Ctrl-']'`` to exit console.
+There should be seen a moving monkey:
+
+```
+uart:~$ xu console 4
+Attached to a domain console
+Domain console overrun detected. 705 bytes was lost
+00 (order 2)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc0000e0000 - ffffffc000100000 (order 5)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000100000 - ffffffc000200000 (order 8)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000200000 - ffffffc000400000 (order 9)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000400000 - ffffffc000800000 (order 10)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000800000 - ffffffc000c00000 (order 10)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000c00000 - ffffffc000e00000 (order 9)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000e00000 - ffffffc000f00000 (order 8)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000f00000 - ffffffc000f80000 (order 7)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000f80000 - ffffffc000fc0000 (order 6)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000fc0000 - ffffffc000fe0000 (order 5)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000fe0000 - ffffffc000ff0000 (order 4)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000ff0000 - ffffffc000ff8000 (order 3)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000ff8000 - ffffffc000ffc000 (order 2)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000ffc000 - ffffffc000ffe000 (order 1)
+dbg:  [libukallocbbuddy] ffffffc0000d9000: Add allocate unit ffffffc000ffe000 - ffffffc000fff000 (order 0)
+dbg:  [libxenplat] FDT suggests grant table base 38000000
+dbg:  [libxenplat] map_gnttab, phys = 0x38000000
+dbg:  [libcontext] tls_area_init: target: 0xffffffc000ffe020 (312 bytes)
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: tcb: 16 bytes
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: copy (.tdata): 0 bytes
+dbg:  [libcontext] tls_area_init: uninitialized (.tbss): 0 bytes
+dbg:  [libcontext] (tls_area): ffffffc000ffe020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+dbg:  [libcontext] *
+dbg:  [libuksched] uk_thread 0xffffffc0000db0b0 (idle): ctx:0xffffffc0000db0b0, ectx:0xffffffc000ffc160, tlsp:0xffffffc000ffc020
+dbg:  [libcontext] tls_area_init: target: 0xffffffc000ffc020 (312 bytes)
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: tcb: 16 bytes
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: copy (.tdata): 0 bytes
+dbg:  [libcontext] tls_area_init: uninitialized (.tbss): 0 bytes
+dbg:  [libcontext] (tls_area): ffffffc000ffc020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+dbg:  [libcontext] *
+dbg:  [libcontext] ukarch_ctx 0xffffffc0000db0b0: entry:0xffffffc000049fd8(ffffffc0000db018), sp:0xffffffc000fd0020
+dbg:  [libuksched] uk_thread 0xffffffc000ffd018 (init): ctx:0xffffffc000ffd018, ectx:0xffffffc000ffd0d0, tlsp:0xffffffc000ffe020
+dbg:  [libukboot] Call init function: 0xffffffc00002f2cc()...
+dbg:  [libukboot] Call init function: 0xffffffc00004cacc()...
+dbg:  [libvfscore] (int) uk_syscall_r_dup2((int) 0x0, (int) 0x1)
+dbg:  [libvfscore] (int) uk_syscall_r_dup3((int) 0x0, (int) 0x1, (int) 0x0)
+dbg:  [libvfscore] (int) uk_syscall_r_dup2((int) 0x0, (int) 0x2)
+dbg:  [libvfscore] (int) uk_syscall_r_dup3((int) 0x0, (int) 0x2, (int) 0x0)
+dbg:  [libukboot] Call init function: 0xffffffc00004ace4()...
+dbg:  [libukboot] Call init function: 0xffffffc00003b020()...
+dbg:  [libukbus] Initialize bus handler 0xffffffc0000a1178...
+dbg:  [libuksched] uk_thread 0xffffffc000ff8018 (xenstore): ctx:0xffffffc000ff8018, ectx:0xffffffc000ff9160, tlsp:0xffffffc000ff9020
+dbg:  [libcontext] tls_area_init: target: 0xffffffc000ff9020 (312 bytes)
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: tcb: 16 bytes
+dbg:  [libcontext] tls_area_init: pad: 0 bytes
+dbg:  [libcontext] tls_area_init: copy (.tdata): 0 bytes
+dbg:  [libcontext] tls_area_init: uninitialized (.tbss): 0 bytes
+dbg:  [libcontext] (tls_area): ffffffc000ff9020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+dbg:  [libcontext] *
+dbg:  [libcontext] ukarch_ctx 0xffffffc000ff8018: entry:0xffffffc00000ae14(0), sp:0xffffffc0000f0020
+dbg:  [libukbus] Probe bus 0xffffffc0000a1178...
+dbg:  [libxenbus] Complete main loop of xs_msg_write.
+dbg:  [libxengic] EL1 IRQ#31 caught
+dbg:  [libxengic] EL1 IRQ#1023 caught
+dbg:  [libxenbus] Rsp_cons 0, rsp_prod 28.
+dbg:  [libxenbus] Msg len 28, 28 avail, id 0.
+dbg:  [libxenbus] Message is good.
+dbg:  [libxenbus] Rsp_cons 28, rsp_prod 28.
+dbg:  [libxenbus] Complete main loop of xs_msg_write.
+dbg:  [libxengic] EL1 IRQ#31 caught
+dbg:  [libxengic] EL1 IRQ#1023 caught
+dbg:  [libxenbus] Rsp_cons 28, rsp_prod 44.
+dbg:  [libxenbus] Msg len 16, 16 avail, id 1.
+dbg:  [libxenbus] Message is good.
+dbg:  [libxenbus] Rsp_cons 44, rsp_prod 44.
+Powered by
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+             Epimetheus 0.12.0~d25310a4
+Hello world!
+Arguments:  "helloworld"
+
+
+    c'_'o  .--'
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'o'o  .--.        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .-.         RQ#1023 caught
+    (| |)_/   `        dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'o'o  .--.        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .--'        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .--.        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .-.         RQ#1023 caught
+    (| |)_/   `        dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .--.        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c-_-o  .--'        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+    c'_'o  .--.        RQ#1023 caught
+    (| |)_/            dbg:  [libposix_time] (int) uk_syscall_r_nanosleep((const struct timespec*) 0xffffffc0000a0ec8, (struct timespec*) 0xffffffc0000a0ec8)
+      _                RQ#27 caught
+Detached from console
+```
+
+Destroy domain - DomU Unikraft will be destroyed and Xen domain id "4"
+will not be accessible any more.
+
+```
+uart:~$ xu destroy 4
+domain:4 destroyed
+```
 
 ## Start Lunux linux_pv_domu domain example
 
