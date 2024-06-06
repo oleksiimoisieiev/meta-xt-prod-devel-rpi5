@@ -266,7 +266,78 @@ domain:2 destroyed
 
 ## Start Zephyr rpi_5_domu domain example
 
-TODO: cmds and logs
+The **rpi_5_domu** mockups simple Xen guest domain (DomU) without using real RPI5 HW.
+It's based on Zephyr samples/synchronization sample.
+
+Create DomU by using ``xu create`` with **rpi_5_domu**.
+
+**NOTE**: Look for the line like **"domain:3 created"** to get Xen domain id which will be passed to
+to all subsequent commands.
+
+```
+uart:~$ xu create rpi_5_domu
+I: storage: file read /0:/dom0/z_sync.bin size: 64
+I: storage: file read /0:/dom0/z_sync.bin size: 64
+I: bootargs =
+I: Extended region 0: 0x41000000->0xc0000000
+I: Extended region 1: 0x200000000->0x10000000000
+I: rambase = 40000000, ramsize = 16777216
+I: kernbase = 40000000 kernsize = 364548, dtbsize = 8192
+I: kernsize_aligned = 2097152
+I: DTB will be placed on addr = 0x40e00000
+I: storage: file read /0:/dom0/z_sync.bin size: 364548
+domain:3 created
+uart:~$ (XEN) d3v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 1 to 2 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 2 to 3 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 3 to 4 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 4 to 5 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 5 to 6 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 6 to 7 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 7 to 8 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 8 to 9 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 9 to 10 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 10 to 11 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 11 to 12 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 12 to 13 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 13 to 14 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 14 to 15 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d3v0 Expanding d3 grant table from 15 to 16 frames
+```
+
+Attach to DomU console with ``xu console``, use ``Ctrl-']'`` to exit console:
+
+```
+uart:~$ xu console 3
+Attached to a domain console
+[00:00:00.000,000] <inf> xen_events: xen_events_init: events inited
+
+[00:00:00.000,000] <inf> uart_hvc_xen: Xen HVC inited successfully
+
+*** Booting Zephyr OS build cb85dfaa5099 ***
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+thread_a: Hello World from cpu 0 on xenvm!
+thread_b: Hello World from cpu 0 on xenvm!
+Detached from console
+```
+
+Destroy domain - DomU will be destroyed and Xen domain id "3" will not be accessible any more.
+
+```
+uart:~$ xu destroy 3
+domain:3 destroyed
+```
 
 ## Start Unikraft helloworld_xen-arm64 domain example
 
