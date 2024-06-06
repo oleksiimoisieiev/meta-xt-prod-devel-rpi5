@@ -143,7 +143,126 @@ after starting the domain from control domain console.
 
 ## Start Zephyr rpi_5_domd domain example
 
-TODO: cmds and logs
+The **rpi_5_domd**  mockups Driver Domain (DomD) behavior and uses real
+RPI5 GPIO HW ``/soc/gpio@7d517c00``. It's based on Zephyr Blinky sample.
+
+Create DomD by using ``xu create`` with **rpi_5_domd** configuration.
+
+**NOTE**: Look for the line like **"domain:2 created"** to get Xen domain id which will be passed to
+to all subsequent commands.
+
+```
+uart:~$ xu config_list
+rpi_5_domd
+rpi_5_domu
+helloworld_xen-arm64
+linux_pv_domu
+uart:~$ xu create rpi_5_domd
+(XEN) avc:  denied  { create } for current=d0 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { max_vcpus } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { setaddrsize } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { setdomainmaxmem } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { setpagingmempool } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { create } for current=d0 scontext=system_u:system_r:dom0_t tcontext=system_u:object_r:dom0_t tclass=event
+(XEN) avc:  denied  { adjust } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=mmu
+(XEN) avc:  denied  { cacheflush } for source=d0 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:dom0_t tclass=domain2
+I: storage: file read /0:/dom0/z_blinky.bin size: 64
+I: storage: file read /0:/dom0/z_blinky.bin size: 64
+I: bootargs =
+I: Extended region 0: 0x41000000->0xc0000000
+I: Extended region 1: 0x200000000->0x10000000000
+I: rambase = 40000000, ramsize = 16777216
+I: kernbase = 40000000 kernsize = 360452, dtbsize = 8192
+I: kernsize_aligned = 2097152
+I: DTB will be placed on addr = 0x40e00000
+I: storage: file read /0:/dom0/z_blinky.bin size: 360452
+(XEN) avc:  denied  { add } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=resource
+(XEN) avc:  denied  { use_noiommu } for current=d0 range=0x107d517-0x107d517 scontext=system_u:system_r:unlabeled_t tcontext=system_u:object_r:iomem_t tclass=resource
+(XEN) memory_map:add: dom2 gfn=107d517 mfn=107d517 nr=1
+(XEN) avc:  denied  { setvcpucontext } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+(XEN) avc:  denied  { unpause } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+domain:2 created
+^^^^^^^^^^^^^^^^
+uart:~$ (XEN) d2v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER0
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 1 to 2 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 2 to 3 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 3 to 4 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 4 to 5 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 5 to 6 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 6 to 7 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 7 to 8 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 8 to 9 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 9 to 10 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 10 to 11 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 11 to 12 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 12 to 13 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 13 to 14 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 14 to 15 frames
+(XEN) xen-source/xen/common/grant_table.c:1909:d2v0 Expanding d2 grant table from 15 to 16 frames
+(XEN) avc:  denied  { setup } for source=d2 scontext=system_u:system_r:unlabeled_t tcontext=system_u:system_r:unlabeled_t tclass=grant
+```
+
+At this moment RPI5 led should start blinking.
+
+Attach to DomD console with ``xu console``, use ``Ctrl-']'`` to exit console:
+
+```
+uart:~$ xu console 2
+Attached to a domain console
+LED state: OFF
+[00:00:00.000,000] <inf> xen_events: xen_events_init: events inited
+
+[00:00:00.000,000] <inf> uart_hvc_xen: Xen HVC inited successfully
+
+*** Booting Zephyr OS build cb85dfaa5099 ***
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+Detached from console
+```
+
+Pause DomD - RPI5 led should stop blinking and console should produce no new messages:
+
+```
+uart:~$ xu pause 2
+(XEN) avc:  denied  { pause } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+domain:2 paused
+uart:~$ xu console 2
+Attached to a domain console
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+LED state: ON
+LED state: OFF
+Detached from console
+```
+
+Unpause DomD - RPI5 led should start blinking again:
+
+```
+uart:~$ xu unpause 2
+domain:2 unpaused
+```
+
+Destroy DomD - DomD will be destroyed and Xen domain id "2" will not be accessible any more.
+
+```
+uart:~$ xu destroy 2
+(XEN) avc:  denied  { destroy } for source=d0 target=d2 scontext=system_u:system_r:dom0_t tcontext=system_u:system_r:unlabeled_t tclass=domain
+domain:2 destroyed
+```
 
 ## Start Zephyr rpi_5_domu domain example
 
