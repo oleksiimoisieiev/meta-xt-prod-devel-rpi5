@@ -120,14 +120,12 @@ components:
   domu_unikraft:
     default: true
     build-dir: domu_unikraft
-    sources:
-      - type: http
-        url: https://github.com/aoscloud/demo-services/raw/main/monkey_zephyr/src/helloworld_xen-arm64
-        file: helloworld_xen-arm64
-        dir: "."
 
     builder:
-      type: "null"
+      type: custom_script
+      script: "../%{YOCTOS_WORK_DIR}/meta-xt-rpi5-prod-devel/get_unikraft.sh"
+      target_images:
+        - "helloworld_xen-arm64"
 
   domd:
     build-dir: "%{YOCTOS_WORK_DIR}"
